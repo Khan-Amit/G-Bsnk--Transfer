@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G-BANK--Transfer™</title>
     <style>
-        /* INTEGRATED SYSTEM STYLE SHEET (No external link broker needed) */
+        /* INTEGRATED SYSTEM STYLING MATRIX */
         :root {
             --bg-dark: #0f141c;
             --card-bg: #161f2b;
@@ -17,8 +17,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-dark); color: var(--text-main); font-family: sans-serif; padding: 15px; }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: sans-serif; padding: 15px; overflow-x: hidden; }
 
+        /* HEADER DECORATION LAYER */
         .brand-top-banner {
             background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%);
             width: 100vw; margin-left: calc(-50vw + 50%); margin-top: -15px; margin-bottom: 20px;
@@ -30,12 +31,13 @@
             border-bottom: 2px solid var(--accent-blue);
         }
         .brand-logo-text { font-size: 1.3rem; font-weight: bold; color: #ffffff; display: flex; align-items: center; gap: 8px; }
-        .system-metrics { display: flex; gap: 10px; font-size: 0.75rem; }
+        .system-metrics { display: flex; gap: 10px; align-items: center; font-size: 0.75rem; }
         .metric-badge { background: rgba(29, 155, 240, 0.15); border: 1px solid var(--accent-blue); padding: 3px 8px; border-radius: 20px; color: #ffffff; font-weight: bold; }
 
-        .container { width: 100%; max-width: 500px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px; margin: 0 auto; }
+        /* DASHBOARD LAYOUT BUILD */
+        .container { width: 100%; max-width: 500px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px; margin: 0 auto; position: relative; }
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 15px; }
-        .title { font-weight: bold; font-size: 1rem; block; }
+        .title { font-weight: bold; font-size: 1rem; display: block; }
         .sub { font-size: 0.7rem; color: var(--text-sub); display: block; }
         .time { font-family: monospace; font-size: 0.9rem; color: var(--accent-blue); }
 
@@ -51,28 +53,34 @@
         .balance-item .label { font-size: 0.65rem; color: var(--text-sub); margin-bottom: 2px; }
         .balance-item .value { font-family: monospace; font-size: 1rem; font-weight: bold; }
 
-        /* MODAL SCREEN OVERLAY SYSTEM */
+        .btn-launch { width: 100%; padding: 14px; border: none; border-radius: 8px; color: white; background: var(--accent-green); font-weight: bold; font-size: 0.95rem; cursor: pointer; display: block; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 186, 124, 0.3); }
+
+        /* FIX: HIGH PRIORITY GLOBAL POPUP OVERLAY WINDOW */
         .atm-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 20, 28, 0.9);
-            justify-content: center; align-items: center; z-index: 9999;
-            backdrop-filter: blur(4px); display: none;
+            position: fixed !important; top: 0 !important; left: 0 !important; 
+            width: 100vw !important; height: 100vh !important;
+            background: rgba(10, 15, 24, 0.95) !important;
+            display: none; justify-content: center; align-items: center; 
+            z-index: 999999 !important; /* Forces layout forward on mobile */
+            backdrop-filter: blur(6px);
         }
-        .atm-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px; width: 90%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
-        .atm-field { margin-bottom: 12px; }
-        .atm-field label { display: block; font-size: 0.7rem; color: var(--text-sub); margin-bottom: 4px; }
-        .atm-field input, .atm-field select { width: 100%; padding: 8px; background: var(--bg-dark); border: 1px solid var(--border-color); color: white; border-radius: 6px; font-size: 0.85rem; }
-        .atm-counter { background: var(--bg-dark); border: 1px dashed var(--border-color); padding: 8px; border-radius: 6px; text-align: center; margin-bottom: 10px; }
-        .count-number { font-family: monospace; color: var(--accent-blue); font-weight: bold; }
+        .atm-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; width: 92%; max-width: 410px; max-height: 88vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+        .atm-box h2 { font-size: 1.2rem; text-align: center; margin-bottom: 15px; color: #ffffff; letter-spacing: 1px; }
+        .atm-field { margin-bottom: 12px; text-align: left; }
+        .atm-field label { display: block; font-size: 0.72rem; color: var(--text-sub); margin-bottom: 5px; font-weight: 600; }
+        .atm-field input, .atm-field select { width: 100%; padding: 10px; background: var(--bg-dark); border: 1px solid var(--border-color); color: white; border-radius: 7px; font-size: 0.88rem; outline: none; }
+        .atm-field input:focus { border-color: var(--accent-blue); }
+        .atm-counter { background: var(--bg-dark); border: 1px dashed var(--border-color); padding: 8px; border-radius: 6px; text-align: center; margin: 12px 0; }
+        .count-number { font-family: monospace; color: var(--accent-blue); font-weight: bold; font-size: 1rem; }
         .atm-actions { display: flex; gap: 10px; margin-top: 15px; }
-        .atm-actions button, .btn-launch { width: 100%; padding: 10px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; }
+        .atm-actions button { flex: 1; padding: 12px; border: none; border-radius: 7px; color: white; font-weight: bold; cursor: pointer; font-size: 0.88rem; }
         .atm-confirm { background: var(--accent-green); }
         .atm-cancel { background: #3e4b5b; }
-        .btn-launch { background: var(--accent-green); margin-top: 10px; display: block; text-align: center; text-decoration: none; }
     </style>
 </head>
 <body>
 
+    <!-- TOP BRANDING BANNER LAYER -->
     <div class="brand-top-banner">
         <div class="brand-stripe">
             <div class="brand-logo-text"><span>💸🌐🕊️</span> G-BANK--Transfer™</div>
@@ -83,6 +91,7 @@
         </div>
     </div>
 
+    <!-- MAIN APP LANDING CONTAINER -->
     <div class="container" id="mainApp">
         <div class="header">
             <div>
@@ -111,14 +120,15 @@
             <div class="balance-item"><div class="label">⛏️ Monero (XMR)</div><div class="value">0.00000000</div></div>
         </div>
 
+        <!-- UTILITY BOOT BUTTON -->
         <button class="btn-launch" onclick="openATM()">✨ LAUNCH TRANSFER UTILITY</button>
     </div>
 
-    <!-- WINDOW MODAL CONTAINER -->
+    <!-- FIXED ESCAPED MODAL SCREEN WINDOW LAYER -->
     <div class="atm-overlay" id="atmOverlay">
         <div class="atm-box">
             <h2>🌍 HUNDI TRANSFER</h2>
-            <br>
+            
             <div class="atm-field">
                 <label>👤 Sender Name</label>
                 <input type="text" id="atmSender" value="Seliim Ahmed">
@@ -129,7 +139,7 @@
             </div>
             <div class="atm-field">
                 <label>📬 Receiver Account / Wallet Destination</label>
-                <input type="text" id="atmReceiverAccount" placeholder="Bank account or wallet id">
+                <input type="text" id="atmReceiverAccount" placeholder="Bank account or wallet string">
             </div>
             <div class="atm-field">
                 <label>💰 Transfer Amount Volume</label>
@@ -157,6 +167,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             updateClock();
             setInterval(updateClock, 1000);
+            initializeCounter();
         });
 
         function updateClock() {
@@ -164,23 +175,4 @@
             document.getElementById('headerTime').innerText = now.toLocaleTimeString();
         }
 
-        function openATM() {
-            document.getElementById('atmOverlay').style.setProperty('display', 'flex', 'important');
-            document.getElementById('atmCounter').innerText = "X-SA-" + Math.floor(100 + Math.random() * 900);
-        }
-
-        function closeATM() {
-            document.getElementById('atmOverlay').style.setProperty('display', 'none', 'important');
-        }
-
-        function copyWallet() {
-            navigator.clipboard.writeText("45ktWDeTNtUcVMXfJRKS6bbXMznMAStZFX6niJHcVy9uQk132bHJ21QTC5AKvqyx9XJN5e7mPc3vViyGnB2BM6DD1ZoAoZb");
-            alert("Address copied!");
-        }
-
-        function confirmHundi() {
-            const amount = parseFloat(document.getElementById('atmAmount').value);
-            const name = document.getElementById('atmReceiverName').value;
-            const target = document.getElementById('atmReceiverAccount').value;
-            const currency = document.getElementById('atmCurrency').value;
-
+        function initializeCounter() {
