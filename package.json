@@ -1,0 +1,14 @@
+{
+  "name": "g-bsnk--transfer",
+  "version": "1.0.0",
+  "description": "Multi-currency travel transfer interface and calculation engine.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "author": "Seliim Ahmed",
+  "license": "ISC"
+}
