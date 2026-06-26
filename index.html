@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-Bsnk--Transfer · Multi-Currency Dashboard</title>
+    <style>
+        :root {
+            --bg-dark: #0f141c;
+            --card-bg: #161f2b;
+            --border-color: #243447;
+            --text-main: #e1e8ed;
+            --text-sub: #8899a6;
+            --accent-green: #00ba7c;
+            --accent-blue: #1d9bf0;
+            --accent-red: #f4212e;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-window {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        /* ATM OVERLAY */
+        .atm-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 20, 28, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .atm-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+
+        .atm-icon {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .atm-field {
+            margin-bottom: 16px;
+        }
+
+        .atm-field label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .atm-field input, .atm-field select {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+        }
+
+        .atm-field input:focus, .atm-field select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .atm-counter {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bg-dark);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px dashed var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .count-label { font-size: 0.75rem; color: var(--text-sub); }
+        .count-number { font-size: 0.85rem; font-family: monospace; color: var(--accent-blue); }
+
+        .commission-note {
+            font-size: 0.7rem;
+            color: var(--text-sub);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .atm-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .atm-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .atm-actions button:hover { opacity: 0.9; }
+        .atm-confirm { background: var(--accent-green); color: white; }
+        .atm-cancel { background: #3e4b5b; color: white; }
+
+        /* MAIN APP */
+        .container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .title { display: block; font-weight: bold; font-size: 1.1rem; }
+        .sub { display: block; font-size: 0.75rem; color: var(--text-sub); }
+        .time { font-family: monospace; font-size: 0.9rem; color: var(--accent-blue); }
+
+        .wallet-box {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-label { font-size: 0.7rem; color: var(--text-sub); margin-bottom: 6px; }
+        .wallet-address { 
+            font-size: 0.75rem; 
+            word-break: break-all; 
+            font-family: monospace; 
+            margin-bottom: 10px;
+        }
+        .wallet-address a { color: var(--accent-blue); text-decoration: none; }
+        
+        .wallet-actions { display: flex; gap: 8px; }
+        .btn-small {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-small:hover { background: var(--border-color); }
+
+        .balance-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .balance-item {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .balance-item .label { font-size: 0.7rem; color: var(--text-sub); margin-bottom: 4px; }
+        .balance-item .value { font-size: 1.05rem; font-family: monospace; font-weight: bold; }
+        .balance-item .value.thb { color: var(--accent-green); }
+
+        .pool-label { display: block; font-size: 0.7rem; color: var(--text-sub); margin-bottom: 6px; }
+        .pool-select {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .sub-text {
+            text-align: center;
+            font-size: 0.65rem;
+            color: var(--text-sub);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-window">
+        <!-- G-BSNK INTERFACE OVERLAY -->
+        <div class="atm-overlay" id="atmOverlay">
+            <div class="atm-box">
+                <div class="atm-icon">🏛️</div>
+                <h2>G-BSNK TRANSFER</h2>
+                
+                <!-- SENDER DATA -->
+                <div class="atm-field">
+                    <label>👤 Sender (Your Name)</label>
+                    <input type="text" id="atmSender" value="Seliim Ahmed" placeholder="Your full name">
+                </div>
+                <div class="atm-field">
+                    <label>🏦 Sender Bank Name</label>
+                    <select id="atmSenderBank">
+                        <option value="usd_bank">US Account (USD)</option>
+                        <option value="eur_bank">Euro Account (EUR)</option>
+                    </select>
+                </div>
+                <div class="atm-field">
+                    <label>🔢 Sender Account Number</label>
+                    <input type="text" id="atmSenderAccount" value="200-4-25879-0" placeholder="Routing or account pattern">
+                </div>
+
+                <!-- RECEIVER DATA -->
+                <div class="atm-field">
+                    <label>📤 Receiver / Vendor Name</label>
+                    <input type="text" id="atmReceiverName" placeholder="Vendor or local shop name">
+                </div>
+                <div class="atm-field">
+                    <label>🏦 Receiver Destination Bank</label>
+                    <select id="atmReceiverBank">
+                        <option value="" disabled selected>Select Local Destination Bank</option>
+                        <option value="scb">Siam Commercial Bank (SCB)</option>
+                        <option value="kbank">Kasikornbank (KBank)</option>
+                        <option value="bbl">Bangkok Bank (BBL)</option>
+                        <option value="ktb">Krungthai Bank (KTB)</option>
+                    </select>
+                </div>
+                <div class="atm-field">
+                    <label>📬 Receiver Account / PromptPay ID</label>
+                    <input type="text" id="atmReceiverAccount" placeholder="Local bank account or phone number">
+                </div>
+
+                <!-- VALUES -->
+                <div class="atm-field">
+                    <label>💰 Transfer Amount</label>
+                    <input type="number" id="atmAmount" placeholder="Enter amount to send" step="any">
+                </div>
+                <div class="atm-field">
+                    <label>💱 Settlement Currency Target</label>
+                    <select id="atmCurrency">
+                        <option value="THB" selected>Thai Baht (THB)</option>
+                        <option value="USD">US Dollar (USD)</option>
+                        <option value="EUR">Euro (EUR)</option>
+                    </select>
+                </div>
+                <div class="atm-field">
+                    <label>💹 Local Commission Rate (%)</label>
+                    <input type="text" id="atmCommission" value="2.5" readonly>
+                </div>
+
+                <div class="atm-counter">
