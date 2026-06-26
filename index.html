@@ -55,7 +55,7 @@
 
         .btn-launch { width: 100%; padding: 14px; border: none; border-radius: 8px; color: white; background: var(--accent-green); font-weight: bold; font-size: 0.95rem; cursor: pointer; display: block; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 186, 124, 0.3); -webkit-appearance: none; }
 
-        /* ABSOLUTE FIXED MOBILE OVERLAY SYSTEM */
+        /* HIGH-PRIORITY FLOATING OVERLAY VIEW */
         .atm-overlay {
             position: fixed !important; top: 0 !important; left: 0 !important; 
             width: 100vw !important; height: 100vh !important;
@@ -124,7 +124,7 @@
         <button class="btn-launch" onclick="openATM()">✨ LAUNCH TRANSFER UTILITY</button>
     </div>
 
-    <!-- FIXED ESCAPED MODAL SCREEN WINDOW LAYER -->
+    <!-- UTILITY MODAL OVERLAY INTERFACE -->
     <div class="atm-overlay" id="atmOverlay">
         <div class="atm-box">
             <h2>🌍 HUNDI TRANSFER</h2>
@@ -164,13 +164,13 @@
     </div>
 
     <script>
-        // CRITICAL INCOGNITO FIX: Wrap storage engine to prevent silent page crashes
-        let baseCount = 2482;
-        try {
-            let storedCount = localStorage.getItem('gBankVisitorCount');
-            if (storedCount) {
-                baseCount = parseInt(storedCount);
-            }
-            baseCount++;
-            localStorage.setItem('gBankVisitorCount', baseCount);
-        } catch (e) {
+        // INCOGNITO PROTECTED INITIALIZATION
+        // Completely stripped of all localStorage hooks that break on mobile private mode
+        const staticVisitorCount = 2482;
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('visitorCount').innerText = staticVisitorCount.toLocaleString();
+            updateClock();
+            setInterval(updateClock, 1000);
+        });
+
