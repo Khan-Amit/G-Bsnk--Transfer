@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>G-BANK--Transfer™</title>
     <style>
         /* INTEGRATED SYSTEM STYLING MATRIX */
@@ -53,16 +53,17 @@
         .balance-item .label { font-size: 0.65rem; color: var(--text-sub); margin-bottom: 2px; }
         .balance-item .value { font-family: monospace; font-size: 1rem; font-weight: bold; }
 
-        .btn-launch { width: 100%; padding: 14px; border: none; border-radius: 8px; color: white; background: var(--accent-green); font-weight: bold; font-size: 0.95rem; cursor: pointer; display: block; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 186, 124, 0.3); }
+        .btn-launch { width: 100%; padding: 14px; border: none; border-radius: 8px; color: white; background: var(--accent-green); font-weight: bold; font-size: 0.95rem; cursor: pointer; display: block; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 186, 124, 0.3); -webkit-appearance: none; }
 
-        /* ABSOLUTE FIXED MOBILE SCREEN OVERLAY */
+        /* ABSOLUTE FIXED MOBILE OVERLAY SYSTEM */
         .atm-overlay {
             position: fixed !important; top: 0 !important; left: 0 !important; 
             width: 100vw !important; height: 100vh !important;
-            background: rgba(10, 15, 24, 0.95) !important;
+            background: rgba(10, 15, 24, 0.96) !important;
             display: none; justify-content: center; align-items: center; 
             z-index: 999999 !important;
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .atm-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; width: 92%; max-width: 410px; max-height: 88vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
         .atm-box h2 { font-size: 1.2rem; text-align: center; margin-bottom: 15px; color: #ffffff; letter-spacing: 1px; }
@@ -72,7 +73,7 @@
         .atm-counter { background: var(--bg-dark); border: 1px dashed var(--border-color); padding: 8px; border-radius: 6px; text-align: center; margin: 12px 0; }
         .count-number { font-family: monospace; color: var(--accent-blue); font-weight: bold; font-size: 1rem; }
         .atm-actions { display: flex; gap: 10px; margin-top: 15px; }
-        .atm-actions button { flex: 1; padding: 12px; border: none; border-radius: 7px; color: white; font-weight: bold; cursor: pointer; font-size: 0.88rem; }
+        .atm-actions button { flex: 1; padding: 12px; border: none; border-radius: 7px; color: white; font-weight: bold; cursor: pointer; font-size: 0.88rem; -webkit-appearance: none; }
         .atm-confirm { background: var(--accent-green); }
         .atm-cancel { background: #3e4b5b; }
     </style>
@@ -163,15 +164,9 @@
     </div>
 
     <script>
-        // VISITOR ENGINE RUNNING DIRECTLY
+        // VISITOR COUNTER LOGIC RUNNING ON LOAD
         let currentCount = parseInt(localStorage.getItem('gBankVisitorCount')) || 2482;
         currentCount++;
         localStorage.setItem('gBankVisitorCount', currentCount);
         document.getElementById('visitorCount').innerText = currentCount.toLocaleString();
 
-        window.addEventListener('DOMContentLoaded', () => {
-            updateClock();
-            setInterval(updateClock, 1000);
-        });
-
-        function updateClock() {
