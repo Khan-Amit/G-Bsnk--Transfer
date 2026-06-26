@@ -3,291 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G-Bsnk--Transfer · Multi-Currency Dashboard</title>
+    <title>G-BANK--Transfer™</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --bg-dark: #0f141c;
-            --card-bg: #161f2b;
-            --border-color: #243447;
-            --text-main: #e1e8ed;
-            --text-sub: #8899a6;
-            --accent-green: #00ba7c;
-            --accent-blue: #1d9bf0;
-            --accent-red: #f4212e;
+        /* TOP DECORATION HEADER STYLES */
+        .brand-top-banner {
+            background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%); /* Navy Blue Background */
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-top: -20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
+        
+        .brand-stripe {
+            background-color: #000814; /* Dark Blue / Black Stripe */
+            padding: 12px 20px;
             display: flex;
-            justify-content: center;
-        }
-
-        .app-window {
-            width: 100%;
-            max-width: 500px;
-            position: relative;
-        }
-
-        /* ATM OVERLAY */
-        .atm-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 20, 28, 0.95);
-            display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(4px);
+            border-bottom: 2px solid var(--accent-blue);
         }
 
-        .atm-box {
+        .brand-logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* LIVE SYSTEM METRICS */
+        .system-metrics {
+            display: flex;
+            gap: 15px;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+        }
+
+        .metric-badge {
+            background: rgba(29, 155, 240, 0.15);
+            border: 1px solid var(--accent-blue);
+            padding: 4px 10px;
+            border-radius: 20px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        /* SECURITY GATE MODULE */
+        .security-gate {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 24px;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-        }
-
-        .atm-icon {
-            font-size: 2.5rem;
+            padding: 25px;
+            max-width: 400px;
+            margin: 40px auto;
             text-align: center;
-            margin-bottom: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        h2 {
-            text-align: center;
-            margin-top: 0;
-            font-size: 1.4rem;
-            letter-spacing: 1px;
-            color: var(--text-main);
+        .security-input-group {
+            margin: 15px 0;
+            text-align: left;
         }
 
-        .atm-field {
-            margin-bottom: 16px;
-        }
-
-        .atm-field label {
+        .security-input-group label {
             display: block;
             font-size: 0.75rem;
             color: var(--text-sub);
-            margin-bottom: 6px;
-            font-weight: 600;
+            margin-bottom: 5px;
         }
 
-        .atm-field input, .atm-field select {
+        .security-gate input {
             width: 100%;
-            padding: 10px;
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 0.9rem;
-        }
-
-        .atm-field input:focus, .atm-field select:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-        }
-
-        .atm-counter {
-            display: flex;
-            justify-content: space-between;
-            background: var(--bg-dark);
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px dashed var(--border-color);
-            margin-bottom: 12px;
-        }
-
-        .count-label { font-size: 0.75rem; color: var(--text-sub); }
-        .count-number { font-size: 0.85rem; font-family: monospace; color: var(--accent-blue); }
-
-        .commission-note {
-            font-size: 0.7rem;
-            color: var(--text-sub);
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .atm-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .atm-actions button {
-            flex: 1;
             padding: 12px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: opacity 0.2s;
-        }
-
-        .atm-actions button:hover { opacity: 0.9; }
-        .atm-confirm { background: var(--accent-green); color: white; }
-        .atm-cancel { background: #3e4b5b; color: white; }
-
-        /* MAIN APP */
-        .container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .title { display: block; font-weight: bold; font-size: 1.1rem; }
-        .sub { display: block; font-size: 0.75rem; color: var(--text-sub); }
-        .time { font-family: monospace; font-size: 0.9rem; color: var(--accent-blue); }
-
-        .wallet-box {
             background: var(--bg-dark);
             border: 1px solid var(--border-color);
+            color: white;
             border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 20px;
-        }
-
-        .wallet-label { font-size: 0.7rem; color: var(--text-sub); margin-bottom: 6px; }
-        .wallet-address { 
-            font-size: 0.75rem; 
-            word-break: break-all; 
-            font-family: monospace; 
             margin-bottom: 10px;
-        }
-        .wallet-address a { color: var(--accent-blue); text-decoration: none; }
-        
-        .wallet-actions { display: flex; gap: 8px; }
-        .btn-small {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .btn-small:hover { background: var(--border-color); }
-
-        .balance-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
 
-        .balance-item {
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        .balance-item .label { font-size: 0.7rem; color: var(--text-sub); margin-bottom: 4px; }
-        .balance-item .value { font-size: 1.05rem; font-family: monospace; font-weight: bold; }
-        .balance-item .value.thb { color: var(--accent-green); }
-
-        .pool-label { display: block; font-size: 0.7rem; color: var(--text-sub); margin-bottom: 6px; }
-        .pool-select {
+        .btn-gate {
             width: 100%;
-            padding: 10px;
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            border-radius: 6px;
-            font-size: 0.85rem;
+            padding: 12px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        .sub-text {
-            text-align: center;
-            font-size: 0.65rem;
+        .config-link {
+            font-size: 0.7rem;
             color: var(--text-sub);
-            margin-top: 20px;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
 
-    <div class="app-window">
-        <!-- G-BSNK INTERFACE OVERLAY -->
-        <div class="atm-overlay" id="atmOverlay">
-            <div class="atm-box">
-                <div class="atm-icon">🏛️</div>
-                <h2>G-BSNK TRANSFER</h2>
-                
-                <!-- SENDER DATA -->
-                <div class="atm-field">
-                    <label>👤 Sender (Your Name)</label>
-                    <input type="text" id="atmSender" value="Seliim Ahmed" placeholder="Your full name">
-                </div>
-                <div class="atm-field">
-                    <label>🏦 Sender Bank Name</label>
-                    <select id="atmSenderBank">
-                        <option value="usd_bank">US Account (USD)</option>
-                        <option value="eur_bank">Euro Account (EUR)</option>
-                    </select>
-                </div>
-                <div class="atm-field">
-                    <label>🔢 Sender Account Number</label>
-                    <input type="text" id="atmSenderAccount" value="200-4-25879-0" placeholder="Routing or account pattern">
-                </div>
+    <!-- TOP BRANDING CONTAINER -->
+    <div class="brand-top-banner">
+        <div class="brand-stripe">
+            <div class="brand-logo-text">
+                <span>💸🌐🕊️</span> G-BANK--Transfer™
+            </div>
+            <div class="system-metrics">
+                <div>Visitors: <span id="visitorCount" class="metric-badge">002,481</span></div>
+                <div>Session Security: <span id="lockStatusBadge" class="metric-badge" style="color:#e0245e;">LOCKED</span></div>
+            </div>
+        </div>
+    </div>
 
-                <!-- RECEIVER DATA -->
-                <div class="atm-field">
-                    <label>📤 Receiver / Vendor Name</label>
-                    <input type="text" id="atmReceiverName" placeholder="Vendor or local shop name">
-                </div>
-                <div class="atm-field">
-                    <label>🏦 Receiver Destination Bank</label>
-                    <select id="atmReceiverBank">
-                        <option value="" disabled selected>Select Local Destination Bank</option>
-                        <option value="scb">Siam Commercial Bank (SCB)</option>
-                        <option value="kbank">Kasikornbank (KBank)</option>
-                        <option value="bbl">Bangkok Bank (BBL)</option>
-                        <option value="ktb">Krungthai Bank (KTB)</option>
-                    </select>
-                </div>
-                <div class="atm-field">
-                    <label>📬 Receiver Account / PromptPay ID</label>
-                    <input type="text" id="atmReceiverAccount" placeholder="Local bank account or phone number">
-                </div>
+    <!-- 🔐 RECONFIGURABLE PASSWORD SECURITY GATE -->
+    <div class="container" id="securityGate">
+        <div class="security-gate">
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
+            <h3>Account Gate Connection</h3>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 20px;">Verification required to unlock multi-currency node pipeline.</p>
+            
+            <div class="security-input-group">
+                <label>📱 Registered Phone Number</label>
+                <input type="text" id="gatePhone" value="+66 81 234 5678" placeholder="Enter phone number">
+            </div>
+            
+            <div class="security-input-group">
+                <label>🔑 Secure Access Password</label>
+                <input type="password" id="gatePassword" value="12345" placeholder="Enter password">
+            </div>
 
-                <!-- VALUES -->
-                <div class="atm-field">
-                    <label>💰 Transfer Amount</label>
-                    <input type="number" id="atmAmount" placeholder="Enter amount to send" step="any">
-                </div>
-                <div class="atm-field">
-                    <label>💱 Settlement Currency Target</label>
-                    <select id="atmCurrency">
-                        <option value="THB" selected>Thai Baht (THB)</option>
-                        <option value="USD">US Dollar (USD)</option>
-                        <option value="EUR">Euro (EUR)</option>
-                    </select>
-                </div>
-                <div class="atm-field">
-                    <label>💹 Local Commission Rate (%)</label>
-                    <input type="text" id="atmCommission" value="2.5" readonly>
-                </div>
+            <button class="btn-gate" onclick="verifyGateCredentials()">UNLOCK INTERFACE</button>
+            
+            <span class="config-link" onclick="togglePasswordConfiguration()">⚙️ Change Registered Credentials</span>
+            
+            <!-- Hidden configuration panel -->
+            <div id="configPanel" style="display: none; border-top: 1px dashed var(--border-color); margin-top: 15px; padding-top: 15px; text-align: left;">
+                <h4 style="font-size: 0.8rem; margin-bottom: 10px; color: var(--accent-blue);">Configure New Credentials</h4>
+                <input type="text" id="newPhone" placeholder="New Phone Number">
+                <input type="password" id="newPassword" placeholder="New Password">
+                <button class="btn-small" style="width: 100%; margin-top: 5px; background: var(--accent-green);" onclick="saveNewCredentials()">SAVE SETTINGS</button>
+            </div>
+        </div>
+    </div>
 
-                <div class="atm-counter">
+    <!-- 🌍 HUNDI ATM POPUP (VISIBLE AFTER SECURITY UNLOCK) -->
+    <div class="atm-overlay" id="atmOverlay" style="display:none;">
+        <div class="atm-box">
+            <div class="atm-icon">🏦</div>
+            <h2>🌍 HUNDI TRANSFER</h2>
+            
+            <div class="atm-field">
+                <label>👤 Sender (Your Name)</label>
+                <input type="text" id="atmSender" value="Seliim Ahmed" placeholder="Your full name">
+            </div>
+            <div class="atm-field">
+                <label>🏦 Sender Bank Name</label>
+                <select id="atmSenderBank">
+                    <option value="scb">Siam Commercial Bank (SCB)</option>
+                    <option value="kbank">Kasikornbank (KBank)</option>
+                    <option value="bbl">Bangkok Bank (BBL)</option>
+                    <option value="ktb">Krungthai Bank (KTB)</option>
+                </select>
+            </div>
+            <div class="atm-field">
+                <label>🔢 Sender Account Number</label>
+                <input type="text" id="atmSenderAccount" value="200-4-25879-0" placeholder="Your account number">
+            </div>
+            <div class="atm-field">
+                <label>📤 Receiver Name</label>
+                <input type="text" id="atmReceiverName" placeholder="Receiver's full name">
+            </div>
+            <div class="atm-field">
+                <label>🏦 Receiver Bank Name</label>
+                <select id="atmReceiverBank">
+                    <option value="" disabled selected>Select destination bank</option>
+                    <option value="scb">Siam Commercial Bank (SCB)</option>
+                    <option value="kbank">Kasikornbank (KBank)</option>
+                    <option value="bbl">Bangkok Bank (BBL)</option>
+                    <option value="ktb">Krungthai Bank (KTB)</option>
+                </select>
+            </div>
+            <div class="atm-field">
+                <label>📬 Receiver Account / Wallet</label>
+                <input type="text" id="atmReceiverAccount" placeholder="Receiver's account or wallet">
+            </div>
+            <div class="atm-field">
+                <label>💰 Amount</label>
+                <input type="text" id="atmAmount" placeholder="Enter amount">
+            </div>
+            <div class="atm-field">
+                <label>💱 Settlement Base Currency</label>
+                <select id="atmCurrency">
+                    <option value="USD">US Dollar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="XMR">Monero (XMR)</option>
+                    <option value="BTC">Bitcoin (BTC)</option>
+                    <option value="BDT">Bangladeshi Taka (BDT)</option>
+                </select>
+            </div>
+            <div class="atm-field">
+                <label>🤝 Middleman / Agent (optional)</label>
+                <input type="text" id="atmMiddleman" placeholder="Middleman name or code">
+            </div>
+            <div class="atm-field">
+                <label>💹 Commission (%)</label>
+                <input type="text" id="atmCommission" value="2.5" placeholder="e.g., 2.5">
+            </div>
+            <div class="atm-counter">
+                <div class="count-label">Transaction ID</div>
+                <div class="count-number" id="atmCounter">X-SA-001</div>
+            </div>
+            <div class="commission-note">⚡ Commission will be calculated dynamically from chosen asset base.</div>
+            <div class="atm-actions">
+                <button class="atm-confirm" onclick="confirmHundi()">✅ CONFIRM TRANSFER</button>
+                <button class="atm-cancel" onclick="closeATM()">❌ CANCEL</button>
+            </div>
+            <div class="sub-text">© 2026 Seliim Ahmed · G-BANK--Transfer™</div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD APP PANEL -->
+    <div class="container" id="mainApp" style="display:none;">
+        <!-- HEADER -->
+        <div class="header">
+            <div>
+                <span class="title">⚖️ MARDUK · G-BANK NETWORK</span>
+                <span class="sub">Decentralized Multi-Currency Processor</span>
+            </div>
+            <div class="time" id="headerTime">--:--:--</div>
+        </div>
+
+        <!-- WALLET COMPONENT -->
+        <div class="wallet-box">
+            <div class="wallet-label">📬 Linked Node Network Address</div>
+            <div class="wallet-address">
