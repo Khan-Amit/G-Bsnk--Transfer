@@ -1,4 +1,4 @@
-# G-Bsnk--Transfer™
+# G-Bank--Transfer™
 
 A multi-currency local valuation UI and rate calculating application engine designed for international travel management.
 
