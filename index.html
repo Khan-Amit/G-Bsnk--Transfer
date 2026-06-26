@@ -6,6 +6,7 @@
     <title>G-BANK--Transfer™</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* TOP DECORATION BANNER STYLE */
         .brand-top-banner {
             background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%);
             width: 100vw;
@@ -45,58 +46,11 @@
             color: #ffffff;
             font-weight: bold;
         }
-        .security-gate {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 25px;
-            max-width: 400px;
-            margin: 40px auto;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .security-input-group {
-            margin: 15px 0;
-            text-align: left;
-        }
-        .security-input-group label {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            margin-bottom: 5px;
-        }
-        .security-gate input {
-            width: 100%;
-            padding: 12px;
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            color: white;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-        .btn-gate {
-            width: 100%;
-            padding: 12px;
-            background: var(--accent-blue);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .config-link {
-            font-size: 0.7rem;
-            color: var(--text-sub);
-            cursor: pointer;
-            text-decoration: underline;
-            margin-top: 10px;
-            display: inline-block;
-        }
     </style>
 </head>
 <body>
 
+    <!-- TOP BRANDING BANNER -->
     <div class="brand-top-banner">
         <div class="brand-stripe">
             <div class="brand-logo-text">
@@ -104,42 +58,50 @@
             </div>
             <div class="system-metrics">
                 <div>Visitors: <span id="visitorCount" class="metric-badge">002,481</span></div>
-                <div>Session Security: <span id="lockStatusBadge" class="metric-badge" style="color:#e0245e;">LOCKED</span></div>
+                <div>Status: <span class="metric-badge" style="color:#00ba7c; border-color:#00ba7c;">READY</span></div>
             </div>
         </div>
     </div>
 
-    <!-- SECURITY CHECKPOINT CONTAINER -->
-    <div class="container" id="securityGate">
-        <div class="security-gate">
-            <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
-            <h3>Account Gate Connection</h3>
-            <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 20px;">Verification required to unlock multi-currency node pipeline.</p>
-            
-            <div class="security-input-group">
-                <label>📱 Registered Phone Number</label>
-                <input type="text" id="gatePhone" placeholder="Enter phone number">
+    <!-- MAIN DASHBOARD APP PANEL (OPENS DIRECTLY) -->
+    <div class="container" id="mainApp">
+        <!-- HEADER -->
+        <div class="header">
+            <div>
+                <span class="title">⚖️ MARDUK · G-BANK NETWORK</span>
+                <span class="sub">Decentralized Multi-Currency Processor</span>
             </div>
-            
-            <div class="security-input-group">
-                <label>🔑 Secure Access Password</label>
-                <input type="password" id="gatePassword" placeholder="Enter password">
-            </div>
+            <div class="time" id="headerTime">--:--:--</div>
+        </div>
 
-            <button class="btn-gate" onclick="verifyGateCredentials()">UNLOCK INTERFACE</button>
-            
-            <span class="config-link" onclick="togglePasswordConfiguration()">⚙️ Change Registered Credentials</span>
-            
-            <div id="configPanel" style="display: none; border-top: 1px dashed var(--border-color); margin-top: 15px; padding-top: 15px; text-align: left;">
-                <h4 style="font-size: 0.8rem; margin-bottom: 10px; color: var(--accent-blue);">Configure New Credentials</h4>
-                <input type="text" id="newPhone" placeholder="New Phone Number">
-                <input type="password" id="newPassword" placeholder="New Password">
-                <button class="btn-small" style="width: 100%; margin-top: 5px; background: var(--accent-green);" onclick="saveNewCredentials()">SAVE SETTINGS</button>
+        <!-- LINKED NODE CARD component -->
+        <div class="wallet-box">
+            <div class="wallet-label">📬 Linked Node Network Address</div>
+            <div class="wallet-address">
+                <a href="https://xmrchain.net" target="_blank">
+                    45ktWDeTNtUcVMXfJRKS6bbXMznMAStZFX6niJHcVy9uQk132bHJ21QTC5AKvqyx9XJN5e7mPc3vViyGnB2BM6DD1ZoAoZb
+                </a>
+            </div>
+            <div class="wallet-actions">
+                <button class="btn-small" onclick="copyWallet()">📋 COPY</button>
+                <button class="btn-small" onclick="window.open('https://xmrchain.net','_blank')">🔗 VIEW NODE</button>
             </div>
         </div>
+
+        <!-- USER BALANCES GENERATION MATRIX -->
+        <div class="balance-grid" id="balanceContainer">
+            <div class="balance-item"><div class="label">💵 US Dollar (USD)</div><div class="value usdt" id="usdBal">1,250.00</div></div>
+            <div class="balance-item"><div class="label">💶 Euro (EUR)</div><div class="value eth" id="eurBal">940.00</div></div>
+            <div class="balance-item"><div class="label">🇹🇭 Thai Baht (THB Value)</div><div class="value thb" id="thbVal">฿ 43,125.00</div></div>
+            <div class="balance-item"><div class="label">⛏️ Monero (XMR)</div><div class="value xmr" id="xmrBal">0.00000000</div></div>
+            <div class="balance-item"><div class="label">₿ Bitcoin (BTC)</div><div class="value btc" id="btcBal">0.00000000</div></div>
+            <div class="balance-item"><div class="label">💰 Tether (USDT)</div><div class="value usdt" id="usdtBal">0.00</div></div>
+        </div>
+
+        <button class="btn-gate" style="background: var(--accent-green); margin-top: 10px; width:100%; padding:12px; border:none; border-radius:8px; color:white; font-weight:bold; cursor:pointer;" onclick="openATM()">✨ LAUNCH TRANSFER UTILITY</button>
     </div>
 
-    <!-- MAIN HUNDI PAYMENTS MODULE -->
+    <!-- HUNDI PAYMENT OVERLAY POPUP -->
     <div class="atm-overlay" id="atmOverlay" style="display:none;">
         <div class="atm-box">
             <div class="atm-icon">🏦</div>
@@ -214,22 +176,41 @@
         </div>
     </div>
 
-    <!-- MAIN APP LANDING VIEW -->
-    <div class="container" id="mainApp" style="display:none;">
-        <div class="header">
-            <div>
-                <span class="title">⚖️ MARDUK · G-BANK NETWORK</span>
-                <span class="sub">Decentralized Multi-Currency Processor</span>
-            </div>
-            <div class="time" id="headerTime">--:--:--</div>
-        </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            updateClock();
+            setInterval(updateClock, 1000);
+            initializeCounter();
+        });
 
-        <div class="wallet-box">
-            <div class="wallet-label">📬 Linked Node Network Address</div>
-            <div class="wallet-address">
-                <a href="https://xmrchain.net" target="_blank">
-                    45ktWDeTNtUcVMXfJRKS6bbXMznMAStZFX6niJHcVy9uQk132bHJ21QTC5AKvqyx9XJN5e7mPc3vViyGnB2BM6DD1ZoAoZb
-                </a>
-            </div>
-            <div class="wallet-actions">
-                <button class="btn-small" onclick="copyWallet()">📋 COPY</button>
+        function updateClock() {
+            const now = new Date();
+            const timeEl = document.getElementById('headerTime');
+            if (timeEl) timeEl.innerText = now.toLocaleTimeString();
+        }
+
+        function initializeCounter() {
+            let currentCount = parseInt(localStorage.getItem('gBankVisitorCount')) || 2481;
+            currentCount++;
+            localStorage.setItem('gBankVisitorCount', currentCount);
+            document.getElementById('visitorCount').innerText = currentCount.toLocaleString();
+        }
+
+        function openATM() { document.getElementById('atmOverlay').style.display = 'flex'; }
+        function closeATM() { document.getElementById('atmOverlay').style.display = 'none'; }
+        
+        function copyWallet() {
+            const address = document.querySelector('.wallet-address a').innerText;
+            navigator.clipboard.writeText(address).then(() => alert("Linked node address copied."));
+        }
+
+        function confirmHundi() {
+            const amount = parseFloat(document.getElementById('atmAmount').value);
+            const currency = document.getElementById('atmCurrency').value;
+            const commission = parseFloat(document.getElementById('atmCommission').value) || 2.5;
+
+            if (!amount || isNaN(amount)) {
+                alert("Please type a valid numerical transaction value.");
+                return;
+            }
+
