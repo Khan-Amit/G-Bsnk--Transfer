@@ -6,25 +6,22 @@
     <title>G-BANK--Transfer™</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* TOP DECORATION HEADER STYLES */
         .brand-top-banner {
-            background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%); /* Navy Blue Background */
+            background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%);
             width: 100vw;
             margin-left: calc(-50vw + 50%);
             margin-top: -20px;
             margin-bottom: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-        
         .brand-stripe {
-            background-color: #000814; /* Dark Blue / Black Stripe */
+            background-color: #000814;
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--accent-blue);
         }
-
         .brand-logo-text {
             font-size: 1.4rem;
             font-weight: 800;
@@ -34,15 +31,12 @@
             align-items: center;
             gap: 10px;
         }
-
-        /* LIVE SYSTEM METRICS */
         .system-metrics {
             display: flex;
             gap: 15px;
             font-size: 0.75rem;
             color: var(--text-sub);
         }
-
         .metric-badge {
             background: rgba(29, 155, 240, 0.15);
             border: 1px solid var(--accent-blue);
@@ -51,8 +45,6 @@
             color: #ffffff;
             font-weight: bold;
         }
-
-        /* SECURITY GATE MODULE */
         .security-gate {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -63,19 +55,16 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
         .security-input-group {
             margin: 15px 0;
             text-align: left;
         }
-
         .security-input-group label {
             display: block;
             font-size: 0.75rem;
             color: var(--text-sub);
             margin-bottom: 5px;
         }
-
         .security-gate input {
             width: 100%;
             padding: 12px;
@@ -86,7 +75,6 @@
             margin-bottom: 10px;
             font-size: 0.9rem;
         }
-
         .btn-gate {
             width: 100%;
             padding: 12px;
@@ -97,7 +85,6 @@
             font-weight: bold;
             cursor: pointer;
         }
-
         .config-link {
             font-size: 0.7rem;
             color: var(--text-sub);
@@ -110,7 +97,6 @@
 </head>
 <body>
 
-    <!-- TOP BRANDING CONTAINER -->
     <div class="brand-top-banner">
         <div class="brand-stripe">
             <div class="brand-logo-text">
@@ -123,7 +109,7 @@
         </div>
     </div>
 
-    <!-- 🔐 RECONFIGURABLE PASSWORD SECURITY GATE -->
+    <!-- SECURITY CHECKPOINT CONTAINER -->
     <div class="container" id="securityGate">
         <div class="security-gate">
             <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
@@ -132,19 +118,18 @@
             
             <div class="security-input-group">
                 <label>📱 Registered Phone Number</label>
-                <input type="text" id="gatePhone" value="+66 81 234 5678" placeholder="Enter phone number">
+                <input type="text" id="gatePhone" placeholder="Enter phone number">
             </div>
             
             <div class="security-input-group">
                 <label>🔑 Secure Access Password</label>
-                <input type="password" id="gatePassword" value="12345" placeholder="Enter password">
+                <input type="password" id="gatePassword" placeholder="Enter password">
             </div>
 
             <button class="btn-gate" onclick="verifyGateCredentials()">UNLOCK INTERFACE</button>
             
             <span class="config-link" onclick="togglePasswordConfiguration()">⚙️ Change Registered Credentials</span>
             
-            <!-- Hidden configuration panel -->
             <div id="configPanel" style="display: none; border-top: 1px dashed var(--border-color); margin-top: 15px; padding-top: 15px; text-align: left;">
                 <h4 style="font-size: 0.8rem; margin-bottom: 10px; color: var(--accent-blue);">Configure New Credentials</h4>
                 <input type="text" id="newPhone" placeholder="New Phone Number">
@@ -154,7 +139,7 @@
         </div>
     </div>
 
-    <!-- 🌍 HUNDI ATM POPUP (VISIBLE AFTER SECURITY UNLOCK) -->
+    <!-- MAIN HUNDI PAYMENTS MODULE -->
     <div class="atm-overlay" id="atmOverlay" style="display:none;">
         <div class="atm-box">
             <div class="atm-icon">🏦</div>
@@ -206,7 +191,6 @@
                     <option value="EUR">Euro (EUR)</option>
                     <option value="XMR">Monero (XMR)</option>
                     <option value="BTC">Bitcoin (BTC)</option>
-                    <option value="BDT">Bangladeshi Taka (BDT)</option>
                 </select>
             </div>
             <div class="atm-field">
@@ -230,9 +214,8 @@
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD APP PANEL -->
+    <!-- MAIN APP LANDING VIEW -->
     <div class="container" id="mainApp" style="display:none;">
-        <!-- HEADER -->
         <div class="header">
             <div>
                 <span class="title">⚖️ MARDUK · G-BANK NETWORK</span>
@@ -241,7 +224,12 @@
             <div class="time" id="headerTime">--:--:--</div>
         </div>
 
-        <!-- WALLET COMPONENT -->
         <div class="wallet-box">
             <div class="wallet-label">📬 Linked Node Network Address</div>
             <div class="wallet-address">
+                <a href="https://xmrchain.net" target="_blank">
+                    45ktWDeTNtUcVMXfJRKS6bbXMznMAStZFX6niJHcVy9uQk132bHJ21QTC5AKvqyx9XJN5e7mPc3vViyGnB2BM6DD1ZoAoZb
+                </a>
+            </div>
+            <div class="wallet-actions">
+                <button class="btn-small" onclick="copyWallet()">📋 COPY</button>
