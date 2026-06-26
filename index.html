@@ -164,9 +164,13 @@
     </div>
 
     <script>
-        // VISITOR COUNTER LOGIC RUNNING ON LOAD
-        let currentCount = parseInt(localStorage.getItem('gBankVisitorCount')) || 2482;
-        currentCount++;
-        localStorage.setItem('gBankVisitorCount', currentCount);
-        document.getElementById('visitorCount').innerText = currentCount.toLocaleString();
-
+        // CRITICAL INCOGNITO FIX: Wrap storage engine to prevent silent page crashes
+        let baseCount = 2482;
+        try {
+            let storedCount = localStorage.getItem('gBankVisitorCount');
+            if (storedCount) {
+                baseCount = parseInt(storedCount);
+            }
+            baseCount++;
+            localStorage.setItem('gBankVisitorCount', baseCount);
+        } catch (e) {
