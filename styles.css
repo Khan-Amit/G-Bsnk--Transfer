@@ -1,0 +1,279 @@
+/* Color Variables matching the dark interface theme */
+:root {
+    --bg-dark: #0f141c;
+    --card-bg: #161f2b;
+    --border-color: #243447;
+    --text-main: #e1e8ed;
+    --text-sub: #8899a6;
+    --accent-green: #00ba7c;
+    --accent-blue: #1d9bf0;
+    --danger-red: #e0245e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Overlay and ATM Pop-up Box */
+.atm-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 20, 28, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.atm-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.atm-icon {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* Form Fields */
+.atm-field {
+    margin-bottom: 16px;
+}
+
+.atm-field label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.atm-field input, .atm-field select {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.atm-field input:focus, .atm-field select:focus {
+    border-color: var(--accent-blue);
+}
+
+/* Counter & Notes */
+.atm-counter {
+    background: var(--bg-dark);
+    border: 1px dashed var(--border-color);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.count-label {
+    font-size: 0.65rem;
+    color: var(--text-sub);
+    text-transform: uppercase;
+}
+
+.count-number {
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: var(--accent-blue);
+    font-weight: bold;
+}
+
+.commission-note {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Buttons and Actions */
+.atm-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.atm-actions button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: opacity 0.2s;
+}
+
+.atm-actions button:hover {
+    opacity: 0.9;
+}
+
+.atm-confirm {
+    background: var(--accent-green);
+    color: #ffffff;
+}
+
+.atm-cancel {
+    background: #3e4b5b;
+    color: #ffffff;
+}
+
+.sub-text {
+    font-size: 0.65rem;
+    color: var(--text-sub);
+    text-align: center;
+}
+
+/* Main Dashboard App Layout */
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+
+.title {
+    display: block;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.sub {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+}
+
+.time {
+    font-family: monospace;
+    font-size: 1rem;
+    color: var(--accent-blue);
+}
+
+/* Wallet Card component */
+.wallet-box {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.wallet-label {
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    margin-bottom: 8px;
+}
+
+.wallet-address {
+    font-family: monospace;
+    font-size: 0.8rem;
+    word-break: break-all;
+    margin-bottom: 12px;
+}
+
+.wallet-address a {
+    color: var(--accent-blue);
+    text-decoration: none;
+}
+
+.wallet-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-small:hover {
+    background: var(--border-color);
+}
+
+/* Balance Cards Display Grid */
+.balance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.balance-item {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.balance-item .label {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    margin-bottom: 4px;
+}
+
+.balance-item .value {
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.pool-select {
+    width: 100%;
+    padding: 10px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    font-size: 0.8rem;
+}
