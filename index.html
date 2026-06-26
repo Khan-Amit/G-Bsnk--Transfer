@@ -55,13 +55,13 @@
 
         .btn-launch { width: 100%; padding: 14px; border: none; border-radius: 8px; color: white; background: var(--accent-green); font-weight: bold; font-size: 0.95rem; cursor: pointer; display: block; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 186, 124, 0.3); }
 
-        /* FIX: HIGH PRIORITY GLOBAL POPUP OVERLAY WINDOW */
+        /* ABSOLUTE FIXED MOBILE SCREEN OVERLAY */
         .atm-overlay {
             position: fixed !important; top: 0 !important; left: 0 !important; 
             width: 100vw !important; height: 100vh !important;
             background: rgba(10, 15, 24, 0.95) !important;
             display: none; justify-content: center; align-items: center; 
-            z-index: 999999 !important; /* Forces layout forward on mobile */
+            z-index: 999999 !important;
             backdrop-filter: blur(6px);
         }
         .atm-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; width: 92%; max-width: 410px; max-height: 88vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
@@ -69,7 +69,6 @@
         .atm-field { margin-bottom: 12px; text-align: left; }
         .atm-field label { display: block; font-size: 0.72rem; color: var(--text-sub); margin-bottom: 5px; font-weight: 600; }
         .atm-field input, .atm-field select { width: 100%; padding: 10px; background: var(--bg-dark); border: 1px solid var(--border-color); color: white; border-radius: 7px; font-size: 0.88rem; outline: none; }
-        .atm-field input:focus { border-color: var(--accent-blue); }
         .atm-counter { background: var(--bg-dark); border: 1px dashed var(--border-color); padding: 8px; border-radius: 6px; text-align: center; margin: 12px 0; }
         .count-number { font-family: monospace; color: var(--accent-blue); font-weight: bold; font-size: 1rem; }
         .atm-actions { display: flex; gap: 10px; margin-top: 15px; }
@@ -164,15 +163,15 @@
     </div>
 
     <script>
+        // VISITOR ENGINE RUNNING DIRECTLY
+        let currentCount = parseInt(localStorage.getItem('gBankVisitorCount')) || 2482;
+        currentCount++;
+        localStorage.setItem('gBankVisitorCount', currentCount);
+        document.getElementById('visitorCount').innerText = currentCount.toLocaleString();
+
         window.addEventListener('DOMContentLoaded', () => {
             updateClock();
             setInterval(updateClock, 1000);
-            initializeCounter();
         });
 
         function updateClock() {
-            const now = new Date();
-            document.getElementById('headerTime').innerText = now.toLocaleTimeString();
-        }
-
-        function initializeCounter() {
