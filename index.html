@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD APP PANEL (OPENS DIRECTLY) -->
+    <!-- MAIN DASHBOARD APP PANEL -->
     <div class="container" id="mainApp">
         <!-- HEADER -->
         <div class="header">
@@ -74,7 +74,7 @@
             <div class="time" id="headerTime">--:--:--</div>
         </div>
 
-        <!-- LINKED NODE CARD component -->
+        <!-- LINKED NODE CARD COMPONENT -->
         <div class="wallet-box">
             <div class="wallet-label">📬 Linked Node Network Address</div>
             <div class="wallet-address">
@@ -196,21 +196,26 @@
             document.getElementById('visitorCount').innerText = currentCount.toLocaleString();
         }
 
-        function openATM() { document.getElementById('atmOverlay').style.display = 'flex'; }
-        function closeATM() { document.getElementById('atmOverlay').style.display = 'none'; }
+        // Updated window management utility matching CSS rules securely
+        function openATM() { 
+            const overlay = document.getElementById('atmOverlay');
+            if (overlay) {
+                overlay.style.setProperty('display', 'flex', 'important');
+                generateTransactionID();
+            }
+        }
+
+        function closeATM() { 
+            const overlay = document.getElementById('atmOverlay');
+            if (overlay) {
+                overlay.style.setProperty('display', 'none', 'important');
+            }
+        }
+
+        function generateTransactionID() {
+            const randSuffix = Math.floor(100 + Math.random() * 900);
+            document.getElementById('atmCounter').innerText = `X-SA-${randSuffix}`;
+        }
         
         function copyWallet() {
             const address = document.querySelector('.wallet-address a').innerText;
-            navigator.clipboard.writeText(address).then(() => alert("Linked node address copied."));
-        }
-
-        function confirmHundi() {
-            const amount = parseFloat(document.getElementById('atmAmount').value);
-            const currency = document.getElementById('atmCurrency').value;
-            const commission = parseFloat(document.getElementById('atmCommission').value) || 2.5;
-
-            if (!amount || isNaN(amount)) {
-                alert("Please type a valid numerical transaction value.");
-                return;
-            }
-
